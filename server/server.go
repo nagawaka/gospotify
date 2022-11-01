@@ -3,24 +3,26 @@ package server
 import (
 	"errors"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 	"github.com/spf13/viper"
+	"spoti/crawl/auth"
 )
 
-func getRoot(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("got / request\n")
-	io.WriteString(w, "This is my website!\n")
-}
-func getHello(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("got /hello request\n")
-	io.WriteString(w, "Hello, HTTP!\n")
-}
+// func completer(d prompt.Document) []prompt.Suggest {
+// 	s := []prompt.Suggest{
+// 		{Text: "users", Description: "Store the username and age"},
+// 		{Text: "articles", Description: "Store the article text posted by user"},
+// 		{Text: "comments", Description: "Store the text commented to articles"},
+// 	}
+// 	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
+// }
 
 func Start() {
-	http.HandleFunc("/", getRoot)
-	http.HandleFunc("/hello", getHello)
+	http.HandleFunc("/", auth.Redirect)
+	http.HandleFunc("/callback", auth.Callback)
+
+	viper.SetDefault("CLIENT_STATE", "BpLnfgDsc2WD8F2q")
 
 	err := http.ListenAndServe(fmt.Sprintf(":%s", viper.Get("PORT")), nil)
 	if errors.Is(err, http.ErrServerClosed) {

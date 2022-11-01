@@ -10,7 +10,7 @@ func main() {
 	viper.SetConfigFile(".env")
 	viper.ReadInConfig()
 
-	fmt.Println("Hello world!")
+	fmt.Println("Server started!")
 
 	server.Start()
 }
