@@ -24,3 +24,5 @@ go.work
 *.csv
 
 .env
+
+.DS_Store
