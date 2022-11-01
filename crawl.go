@@ -1,10 +1,15 @@
 package main
 
-import "fmt"
-
-import "spoti/crawl/server"
+import (
+	"fmt"
+	"github.com/spf13/viper"
+	"spoti/crawl/server"
+)
 
 func main() {
+	viper.SetConfigFile(".env")
+	viper.ReadInConfig()
+
 	fmt.Println("Hello world!")
 
 	server.Start()

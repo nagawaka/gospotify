@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"github.com/spf13/viper"
 )
 
 func getRoot(w http.ResponseWriter, r *http.Request) {
@@ -21,7 +22,7 @@ func Start() {
 	http.HandleFunc("/", getRoot)
 	http.HandleFunc("/hello", getHello)
 
-	err := http.ListenAndServe(":3333", nil)
+	err := http.ListenAndServe(fmt.Sprintf(":%s", viper.Get("PORT")), nil)
 	if errors.Is(err, http.ErrServerClosed) {
 		fmt.Printf("server closed\n")
 	} else if err != nil {
